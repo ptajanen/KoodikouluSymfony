@@ -1,3 +1,22 @@
 #index:
 #    path: /
 #    controller: App\Controller\DefaultController::index
+# tämä laskePalkka on vain reitin nimi, se saa olla mikä vaan!
+LaskePalkka: 
+  path: /esimerkki/esim1
+  controller: App\Controller\EsimerkitController::laskePalkka
+
+Karkausvuosi: 
+  path: /esimerkki/esim2
+  controller: App\Controller\EsimerkitController::tarkistaKarkausvuosi
+
+LaskePH: 
+  path: /esimerkki/esim3
+  controller: App\Controller\EsimerkitController::laskePH
+
+HeitaNoppaa: 
+  path: /esimerkki/esim4
+  controller: App\Controller\EsimerkitController::heitaNoppaa
+NaytaJSON: 
+  path: /esimerkki/esim5
+  controller: App\Controller\EsimerkitController::naytaJSON
