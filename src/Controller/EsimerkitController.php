@@ -4,13 +4,15 @@ namespace App\Controller;
 
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\JsonResponse;
-
 use Symfony\Component\Routing\Annotation\Route;
+// tarvitaan näkymää varten
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 
-// luokan nimi pitää olla sama kuin tiedoston!!
-class EsimerkitController {
-    //Kontrollerit eli funktiot tulee tähän
+// luokan nimi pitää olla sama kuin tiedoston!! tässä EsimerkitController
+class EsimerkitController extends AbstractController {
+
+    //Kontrollerit eli metodit tulee tähän (a class method which is used to accept requests, and return a Response object.)
  
     public function laskePalkka() {
     $nettoPalkka = 4500 * 0.7;
@@ -65,8 +67,63 @@ class EsimerkitController {
     }
     
 }
+// Koodaa seuraava kontrolleri (a class method which is used to accept requests, and return a Response object.)
+// Huomaa miten reitti on määritelty. Reitti määritellään nyt kontrollerin yläpuolelle (@Route)
+// Lisää EsimerkitController-luokkaan muiden use-komentojen joukkoon
+// useSymfony\Component\Routing\Annotation\Route;
+// Kontrollerilla on yksi sääntö. Sen pitää palauttaa Response-olio.
+// Harjoituksissa 5 -6 käytettiin komentoja return new Resonse() ja return new JsonResponse.
+// Symfonyssa on kolmaskin tapa tulostaa dataa näytölle, nimittäin Twig.
+// Asenna Twig alla olevalla komenolla. 
+// Komento lisää Symfonyyn uuden kansion nimellä Templates. Kokeillaan Twigiä käytäntöön.
+// Tavoitteena on laskea viikon pakkaspäivien keskiarvo ja tulosta näytölle tiistain ja perjantain lukemat.
+// Lopuksi lasketaan vielä koko viikon lämpötilojen keskiarvo.
 
 /**
- * @Route("esimerkki/esim7)
+ * @Route("esimerkki/esim8")
  */
+public function laskeAsteet() {
+    //Muuttujat
+    $summa = 0;
+    $pakkasPaivat = 0;
+    $tekija = "Pia T";
+    $mittausViikko = 35;
+    $keskiarvo1 = 0;
+    $keskiarvo2 = 0;
+
+    //Talletetaan viikon lampötilat taulukkoon
+    $asteet = [
+        'ma' => 6,
+        'ti' => 3,
+        'ke' => -2,
+        'to' => -4,
+        'pe' => 1,
+        'la' => 0,
+        'su' => -5
+    ];
+
+    //Lasketaan pakkaspäivien summa
+    foreach ($asteet as $aste) {
+        if ($aste < 0) {
+            $summa += $aste;
+            $pakkasPaivat += 1;
+        }
+    }
+
+    // Lasketaan pakkaspäivien keskiarvo yhdellä desimaalilla
+    $keskiarvo1 = number_format(($summa / $pakkasPaivat),1);
+    // Lasketaan viikon keskilämpötila yhdellä desimaalilla
+    $keskiarvo2 = number_format(array_sum($asteet) / count($asteet),1);
+    
+// Kutsutaan näkymää ja lähetetään sille dataa sisältävät muuttujat
+return $this ->render('esimerkit/asteet.html.twig', [
+    'asteet' => $asteet,
+    'keskiarvo1' => $keskiarvo1,
+    'keskiarvo2' => $keskiarvo2,
+    'viikko' => $mittausViikko,
+    'tekija' => $tekija
+]);
+
+}
+
 }
