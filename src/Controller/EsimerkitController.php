@@ -5,6 +5,8 @@ namespace App\Controller;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\JsonResponse;
 
+use Symfony\Component\Routing\Annotation\Route;
+
 
 // luokan nimi pitää olla sama kuin tiedoston!!
 class EsimerkitController {
@@ -47,6 +49,24 @@ class EsimerkitController {
         // Pyydetään JsonResponse-oliota näyttämään tulos
         return new JsonResponse($nimet);    
     }
-
-}
     
+    public function lihapiirakka(){
+    $rahamaaraLompakossa = 10;
+    $lihapiirakanHinta = 2.5;
+
+    //Onko varaa ostaa lihapiirakka
+
+    if ($rahamaaraLompakossa >= $lihapiirakanHinta) {
+        // Rahaa on tarpeeksi, joten vahennetään lompakossa olevaa rahamäärää
+        $rahamaaraLompakossa -= $lihapiirakanHinta;
+        return new Response("Lompakossa on oston jälkeen rahaa " . $rahamaaraLompakossa);
+    } else {
+        return new Response("Kehotan sinua paastoamaan!");
+    }
+    
+}
+
+/**
+ * @Route("esimerkki/esim7)
+ */
+}
